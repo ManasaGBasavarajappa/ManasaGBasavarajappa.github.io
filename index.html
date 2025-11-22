@@ -29,8 +29,8 @@
       padding-bottom: 12px;
     }
     .name {
-      font-size: 24px;
-      font-weight: 600;
+      font-size: 26px;
+      font-weight: 700;
     }
     .tagline {
       font-size: 14px;
@@ -39,7 +39,7 @@
     nav {
       font-size: 14px;
       display: flex;
-      gap: 12px;
+      gap: 16px;
       flex-wrap: wrap;
     }
     nav a { color: #9ca3af; }
@@ -50,32 +50,22 @@
       border-bottom: 1px solid #111827;
     }
     h2 {
-      font-size: 18px;
+      font-size: 20px;
       margin-bottom: 8px;
-    }
-    .muted {
-      color: #9ca3af;
-      font-size: 14px;
+      font-weight: 600;
     }
     ul {
       padding-left: 18px;
     }
     li {
-      margin-bottom: 6px;
-    }
-    .project-title {
-      font-weight: 500;
+      margin-bottom: 8px;
     }
     .meta {
-      font-size: 13px;
       color: #9ca3af;
-    }
-    .contact-list a {
-      margin-right: 12px;
       font-size: 14px;
     }
     footer {
-      margin-top: 12px;
+      margin-top: 20px;
       font-size: 12px;
       color: #6b7280;
       text-align: center;
@@ -88,13 +78,16 @@
     }
   </style>
 </head>
+
 <body>
   <div class="page">
+
+    <!-- HEADER -->
     <header>
       <div>
         <div class="name">Manasa G. Basavarajappa</div>
         <div class="tagline">
-          PhD Student · MATES Lab, Harish-Chandra Research Institute (HRI) · Computational Condensed Matter / Materials Science
+          PhD Student · MATES Lab · Harish-Chandra Research Institute (HRI), India  
         </div>
       </div>
       <nav>
@@ -107,184 +100,181 @@
       </nav>
     </header>
 
+    <!-- ABOUT -->
     <section id="about">
       <h2>About</h2>
       <p>
-        I am a PhD student in Physics at the <strong>Harish-Chandra Research Institute (HRI)</strong>, India, working in the
-        MATES Lab on <strong>emerging oxide double perovskites under pressure</strong>. My research focuses on understanding and
-        designing functional materials for optoelectronic and energy applications using first-principles simulations.
+        I am a PhD student working in the <strong>MATES Lab</strong> at the 
+        <strong>Harish-Chandra Research Institute (HRI)</strong>, India.  
+        My research focuses on computational condensed matter physics and materials science,
+        especially on the <strong>electronic, optical, vibrational, and interfacial properties</strong> 
+        of functional materials using first-principles simulations.
       </p>
       <p>
-        Before joining HRI in 2021, I was a PhD student in the Discipline of Physics at IIT Indore. I completed my
-        M.Sc. in Physics from the University of Mysore with distinction, and my B.Sc. from JSS College for Women,
-        also under the University of Mysore, with distinction.
+        My PhD work involves studying <strong>oxide double perovskites under pressure</strong>, 
+        <strong>optically active halide perovskites</strong>, and 
+        <strong>vdW heterostructures</strong> for energy-related applications such as photovoltaics,
+        photodetection, and charge-transport engineering.
       </p>
     </section>
 
+    <!-- RESEARCH INTERESTS -->
     <section id="research">
       <h2>Research Interests</h2>
       <ul>
-        <li>Density Functional Theory (DFT) for solids and heterostructures</li>
-        <li>Oxide double perovskites under pressure and structural phase behavior</li>
+        <li>Density Functional Theory (DFT) simulations of solids and heterostructures</li>
+        <li>Oxide double perovskites under pressure and structural phase transitions</li>
         <li>Electronic structure: band structures, DOS, effective masses, band alignment</li>
-        <li>Phonons, lattice dynamics, octahedral distortions, and finite-temperature properties</li>
-        <li>Optical properties, SLME, and materials for photovoltaics and photodetection</li>
-        <li>Halide perovskites, hybrid organic–inorganic perovskites, and MXene–perovskite heterostructures</li>
-        <li>AIMD simulations and excited charge dynamics in functional materials</li>
+        <li>Phonons, lattice dynamics, octahedral distortions, soft modes</li>
+        <li>Optical properties, SLME, exciton behavior, optoelectronic materials</li>
+        <li>Hybrid organic–inorganic halide perovskites</li>
+        <li>MXenes and perovskite/MXene heterostructures</li>
+        <li>Ab-initio molecular dynamics (AIMD)</li>
       </ul>
     </section>
 
+    <!-- PUBLICATIONS -->
     <section id="publications">
       <h2>Publications</h2>
-      <p class="muted">(*Co-author order as in the original publications.)</p>
       <ol>
+
         <li>
-          <span class="project-title">
-            Solid-state synthesis of stable and color tunable cesium lead halide perovskite nanocrystals and the mechanism of high-performance photodetection in a monolayer MoS<sub>2</sub>/CsPbBr<sub>3</sub> vertical heterojunction.
-          </span><br />
-          <span class="meta">
-            Joydip Ghosh, Larionette P. L. Mawlong, Manasa G. B, Alexander J. Pattison, Wolfgang Theis,
-            Sudip Chakraborty and P. K. Giri, <em>J. Mater. Chem. C</em>, 8, 8917–8934 (2020).
-          </span>
+          Solid-state synthesis of stable and color tunable cesium lead halide perovskite nanocrystals and the mechanism of high-performance photodetection in a monolayer MoS₂/CsPbBr₃ vertical heterojunction.  
+          <div class="meta">
+            Joydip Ghosh, Larionette P. L. Mawlong, <strong>Manasa G. B</strong>, et al.,  
+            <em>J. Mater. Chem. C</em>, 8, 8917–8934 (2020).
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Anisotropic Photoconductivity and Long-Lived Charge Carriers in Bismuth-Based One-Dimensional Perovskite with Type-IIa Band Alignment.
-          </span><br />
-          <span class="meta">
-            Johnpaul K. Pious, Manasa G. Basavarajappa, Chinnadurai Muthu, Nayana Krishna, Ryosuke Nishikubo,
-            Akinori Saeki, Sudip Chakraborty, and Vijayakumar C. Nair,
+          Anisotropic Photoconductivity and Long-Lived Charge Carriers in Bismuth-Based One-Dimensional Perovskite.  
+          <div class="meta">
+            Johnpaul K. Pious, <strong>Manasa G. Basavarajappa</strong>, et al.,  
             <em>J. Phys. Chem. Lett.</em>, 11, 6757–6762 (2020).
-          </span>
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Self-Assembled Organic Cations Assisted Band-Edge Tailoring in Bismuth-based Perovskites for Enhanced Visible Light Absorption Photoconductivity.
-          </span><br />
-          <span class="meta">
-            J. Pious, Manasa G. Basavarajappa, C. Muthu, R. Nishikubo, A. Saeki, Sudip Chakraborty, A. Takai,
-            M. Takeuchi, C. Vijayakumar, <em>J. Phys. Chem. Lett.</em>, 12, 5758–5764 (2021).
-          </span>
+          Self-Assembled Organic Cations Assisted Band-Edge Tailoring in Bismuth-based Perovskites.  
+          <div class="meta">
+            J. Pious, <strong>Manasa G. Basavarajappa</strong>, et al.,  
+            <em>J. Phys. Chem. Lett.</em>, 12, 5758–5764 (2021).
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Evolution of Hybrid Organic–Inorganic Perovskite Materials under External Pressure.
-          </span><br />
-          <span class="meta">
-            Manasa G. Basavarajappa, M. K. Nazeeruddin, Sudip Chakraborty,
-            <em>Applied Physics Reviews</em>, 8, 014109 (2021), Editor’s Choice Featured Article.
-          </span>
+          Evolution of Hybrid Organic–Inorganic Perovskite Materials under External Pressure.  
+          <div class="meta">
+            <strong>Manasa G. Basavarajappa</strong>, M. K. Nazeeruddin, S. Chakraborty,  
+            <em>Appl. Phys. Rev.</em>, 8, 014109 (2021). (Editor's Choice)
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Tuning Composition Space in Lead-Free Divalent and Tetravalent Halide Perovskites: A Critical Review.
-          </span><br />
-          <span class="meta">
-            Arijeet Sarangi, Manasa G. Basavarajappa and Sudip Chakraborty,
+          Tuning Composition Space in Lead-Free Divalent and Tetravalent Halide Perovskites.  
+          <div class="meta">
+            A. Sarangi, <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
             <em>Emergent Materials</em>, 5, 1021–1032 (2022).
-          </span>
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Rationalization of Double Perovskite Oxides as Energy Materials: A Theoretical Insight from Electronic and Optical Properties.
-          </span><br />
-          <span class="meta">
-            Manasa G. Basavarajappa and Sudip Chakraborty,
-            <em>ACS Materials Au</em>, 2, 655–664 (2022), Invited Review.
-          </span>
+          Rationalization of Double Perovskite Oxides as Energy Materials.  
+          <div class="meta">
+            <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
+            <em>ACS Materials Au</em>, 2, 655–664 (2022). (Invited Review)
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Tuning Optoelectronic Properties of KBaTeBiO<sub>6</sub> Double Perovskite Through Cationic Interplay.
-          </span><br />
-          <span class="meta">
-            Manasa G. Basavarajappa and Sudip Chakraborty,
+          Tuning Optoelectronic Properties of KBaTeBiO₆ Double Perovskite Through Cationic Interplay.  
+          <div class="meta">
+            <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
             <em>ACS Applied Optical Materials</em>, 2, 254–261 (2024).
-          </span>
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Zero-dimensional Tin Halide Perovskite with Long Charge Carrier Lifetime and Anisotropic Photoconductivity for Selective Deep-UV Photodetection.
-          </span><br />
-          <span class="meta">
-            A. Ajayakumar, C. Muthu, Manasa G. Basavarajappa, A. Dev, R. Nishikubo, Sudip Chakraborty,
-            A. Saeki, L. Dou, V. Nair, <em>Advanced Functional Materials</em>, 34, 2304899 (2024).
-          </span>
+          Zero-dimensional Tin Halide Perovskite with Long Carrier Lifetime for Deep-UV Photodetection.  
+          <div class="meta">
+            A. Ajayakumar, <strong>Manasa G. Basavarajappa</strong>, et al.,  
+            <em>Adv. Funct. Mater.</em>, 34, 2304899 (2024).
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Thermally-Induced Reversible Fluorochromism by Self-Trapped Excitonic Emission in a Two-Dimensional Hybrid Copper(I)-Halide Single Crystal.
-          </span><br />
-          <span class="meta">
-            A. Dev, Manasa G. Basavarajappa, S. Deshpande, P. Mukherjee, A. Ajayakumar, C. Muthu,
-            T. Okamoto, Sudip Chakraborty, D. D. Sarma, V. Biju, C. Vijayakumar,
-            <em>Chemistry of Materials</em>, 36, 5912 (2024).
-          </span>
+          Thermally-Induced Reversible Fluorochromism in Hybrid Copper(I)-Halide Perovskite Crystals.  
+          <div class="meta">
+            A. Dev, <strong>Manasa G. Basavarajappa</strong>, et al.,  
+            <em>Chem. Mater.</em>, 36, 5912 (2024).
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Unveiling Synergistic Effect of Temperature and Electric Field on Interfacial Charge Transfer and Band Edge Alignment in MXene–Halide Perovskite Heterostructure.
-          </span><br />
-          <span class="meta">
-            Arijeet Sarangi, Manasa G. Basavarajappa and Sudip Chakraborty,
-            <em>Physical Review B</em>, 2024 (DOI as per journal record).
-          </span>
+          Synergistic Effect of Temperature and Electric Field on Charge Transfer in MXene–Halide Perovskite Heterostructures.  
+          <div class="meta">
+            A. Sarangi, <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
+            <em>Phys. Rev. B</em> (2024).
+          </div>
         </li>
+
         <li>
-          <span class="project-title">
-            Local Symmetry Driven Octahedral Distortions, Phonon Mode Softening and Band Inversion in Pressure Tuned Oxide Double Perovskite.
-          </span><br />
-          <span class="meta">
-            Manasa G. Basavarajappa, Arijeet Sarangi and Sudip Chakraborty, under revision.
-          </span>
+          Local Symmetry Driven Octahedral Distortions and Phonon Softening in Pressure Tuned Oxide Double Perovskites.  
+          <div class="meta">
+            <strong>Manasa G. Basavarajappa</strong>, A. Sarangi, S. Chakraborty,  
+            Under Revision.
+          </div>
         </li>
+
       </ol>
     </section>
 
+    <!-- TEACHING -->
     <section id="teaching">
       <h2>Teaching & Tutorials</h2>
       <ul>
-        <li><span class="project-title">Autumn 2019:</span> B.Tech I sem; Magnetostatics (Tutorial), IIT Indore.</li>
-        <li><span class="project-title">Spring 2020:</span> B.Tech II sem; Electrostatics, Magnetostatics, Electrodynamics (Tutorial), IIT Indore.</li>
-        <li><span class="project-title">Autumn 2020:</span> B.Tech I sem; Modern Physics: Semiconductor, Wave Optics and Lasers (Tutorial), IIT Indore.</li>
-        <li><span class="project-title">Independence Term 2024:</span> M.Sc. I sem; Classical Mechanics (Tutorial), HRI.</li>
+        <li>Autumn 2019 – Magnetostatics (Tutorial), B.Tech I Sem, IIT Indore</li>
+        <li>Spring 2020 – Electrostatics–Electrodynamics (Tutorial), B.Tech II Sem, IIT Indore</li>
+        <li>Autumn 2020 – Modern Physics (Tutorial), B.Tech I Sem, IIT Indore</li>
+        <li>Independence Term 2024 – Classical Mechanics (Tutorial), M.Sc. I Sem, HRI</li>
       </ul>
     </section>
 
+    <!-- CONFERENCES -->
     <section id="conferences">
       <h2>Conferences & Workshops</h2>
       <ul>
-        <li>2nd Indian Materials Conclave and 31st AGM (MRSI), Kolkata, India, February 11–14, 2020.</li>
-        <li>Virtual Conference on “Materials for Energy Harvesting and Catalysis”, May 1–3, 2020.</li>
-        <li>Webinar Series “Materials Simulation: A Virtually Guided Tour”, May 21–31, 2020.</li>
-        <li>FDP “Computational Techniques in Chemistry and Material Science”, September 14–19, 2020.</li>
-        <li>Workshop “Excited Charge Dynamics in Semiconductors”, ICTP Italy, September 28–30, 2020.</li>
-        <li>VAIBHAV Summit – Computational Materials Science sessions, October 2020.</li>
-        <li>CACEE 2020, Conference on Advances in Catalysis, Energy and Environmental Research, December 16–18, 2020.</li>
-        <li>International conference EESTER 2023, SRM University & IIT Madras, January 4–12, 2023.</li>
-        <li>CARE 2023, Recent Advances in Renewable Energy, TIFR Hyderabad & HRI, February 2–4, 2023.</li>
-        <li>MRM–IUMRS 2023 Advanced Materials Research Grand Meeting, Kyoto, Japan, December 11–16, 2023 (CSIR Foreign Travel Grant).</li>
+        <li>MRSI AGM & Materials Conclave, Kolkata (2020)</li>
+        <li>Materials for Energy Harvesting & Catalysis (2020)</li>
+        <li>Materials Simulation Webinar Series (2020)</li>
+        <li>FDP: Computational Techniques in Chemistry & Materials Science (2020)</li>
+        <li>ICTP Workshop on Excited Charge Dynamics (2020)</li>
+        <li>VAIBHAV Summit (2020)</li>
+        <li>CACEE Conference (2020)</li>
+        <li>EESTER International Conference, SRM + IIT Madras (2023)</li>
+        <li>CARE Conference, TIFR + HRI (2023)</li>
+        <li>MRM–IUMRS 2023, Kyoto, Japan (Supported by CSIR Travel Grant)</li>
       </ul>
     </section>
 
+    <!-- CONTACT -->
     <section id="contact">
       <h2>Contact</h2>
-      <p>If you'd like to connect or collaborate, feel free to reach out.</p>
-      <div class="contact-list">
-        <a href="mailto:manasagb@hri.res.in">manasagb@hri.res.in</a>
-        <!-- You can replace # with actual profile links later -->
-        <a href="#">Google Scholar</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">GitHub</a>
-      </div>
-      <p class="muted">
-        Harish-Chandra Research Institute, Chhatnag Road, Jhunsi, Prayagraj - 211019, India · Phone: +91 8317385584
+      <p>If you'd like to connect or collaborate, feel free to reach out:</p>
+      <p>
+        📧 <a href="mailto:manasagb@hri.res.in">manasagb@hri.res.in</a><br>
+        📞 +91 8317385584<br>
+        🏢 Harish-Chandra Research Institute (HRI), Prayagraj, India
+      </p>
+      <p class="meta">
+        (Google Scholar, LinkedIn, GitHub links can be added here once shared.)
       </p>
     </section>
 
     <footer>
       © <span id="year"></span> Manasa G. Basavarajappa · Computational Materials Science
     </footer>
+
   </div>
 
   <script>
