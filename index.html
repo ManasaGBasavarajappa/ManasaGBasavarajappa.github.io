@@ -4,294 +4,1207 @@
   <meta charset="UTF-8" />
   <title>Manasa G. Basavarajappa · Computational Materials Science</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:ital,wght@0,300;0,400;1,300&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg:        #060d1a;
+      --bg2:       #0b1628;
+      --bg3:       #0f1e38;
+      --card:      #0d1a30;
+      --border:    rgba(100,160,255,0.12);
+      --accent:    #5ba4ff;
+      --accent2:   #a8d4ff;
+      --gold:      #c8a97e;
+      --gold2:     #e8d5b0;
+      --text:      #d8e8ff;
+      --muted:     #6b8ab5;
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --mono:      'DM Mono', monospace;
+      --sans:      'Outfit', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      margin: 0;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #020617;
-      color: #e5e7eb;
-      line-height: 1.6;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.75;
+      overflow-x: hidden;
     }
-    a { color: #38bdf8; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+
+    /* ── Noise texture overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Animated crystal lattice background ── */
+    .lattice-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .lattice-bg svg {
+      width: 100%; height: 100%;
+      opacity: 0.035;
+    }
+
+    /* ── Layout ── */
     .page {
-      max-width: 900px;
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 24px 16px 48px;
+      padding: 0 24px 80px;
     }
-    header {
+
+    a { color: var(--accent); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--accent2); }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
       display: flex;
       justify-content: space-between;
-      align-items: baseline;
-      gap: 16px;
-      margin-bottom: 32px;
-      border-bottom: 1px solid #1f2937;
-      padding-bottom: 12px;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      background: rgba(6, 13, 26, 0.88);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      margin-bottom: 0;
     }
-    .name {
-      font-size: 26px;
-      font-weight: 700;
-    }
-    .tagline {
-      font-size: 14px;
-      color: #9ca3af;
-    }
-    nav {
-      font-size: 14px;
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-    nav a { color: #9ca3af; }
-    nav a:hover { color: #e5e7eb; }
-    section {
-      margin-bottom: 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid #111827;
-    }
-    h2 {
-      font-size: 20px;
-      margin-bottom: 8px;
+    .nav-name {
+      font-family: var(--serif);
+      font-size: 17px;
       font-weight: 600;
+      letter-spacing: 0.03em;
+      color: var(--gold2);
     }
-    ul {
-      padding-left: 18px;
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      list-style: none;
     }
-    li {
-      margin-bottom: 8px;
-    }
-    .meta {
-      color: #9ca3af;
-      font-size: 14px;
-    }
-    footer {
-      margin-top: 20px;
+    .nav-links a {
       font-size: 12px;
-      color: #6b7280;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent2); }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 80px 0 60px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 40px;
+      align-items: start;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 32px; height: 1px;
+      background: var(--gold);
+      opacity: 0.6;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(44px, 7vw, 68px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--gold2);
+      margin-bottom: 20px;
+    }
+    h1 em {
+      font-style: italic;
+      color: var(--accent2);
+    }
+    .hero-bio {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 32px;
+    }
+    .tag {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 4px 12px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--accent);
+      background: rgba(91,164,255,0.04);
+      transition: background .2s, border-color .2s;
+    }
+    .tag:hover { background: rgba(91,164,255,0.1); border-color: var(--accent); }
+    .hero-contact {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .contact-item svg { flex-shrink: 0; opacity: .7; }
+
+    /* Crystal ornament */
+    .crystal-ornament {
+      width: 180px;
+      height: 180px;
+      flex-shrink: 0;
+      opacity: 0.55;
+      animation: crystalRotate 30s linear infinite;
+    }
+    @keyframes crystalRotate {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    /* Stats strip */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 48px 0;
+    }
+    .stat {
+      padding: 20px 24px;
+      border-right: 1px solid var(--border);
       text-align: center;
     }
+    .stat:last-child { border-right: none; }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 38px;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    /* ── SECTION HEADINGS ── */
+    section {
+      padding: 60px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-head {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 36px;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.1em;
+    }
+    h2 {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+      color: var(--gold2);
+    }
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── RESEARCH INTERESTS ── */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 12px;
+    }
+    .interest-card {
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--card);
+      font-size: 13.5px;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      transition: border-color .2s, background .2s;
+    }
+    .interest-card:hover {
+      border-color: rgba(91,164,255,0.35);
+      background: rgba(13,26,48,0.9);
+    }
+    .interest-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    /* ── PUBLICATIONS ── */
+    .pub-list { display: flex; flex-direction: column; gap: 16px; }
+    .pub-card {
+      display: grid;
+      grid-template-columns: 36px 1fr;
+      gap: 0 20px;
+      padding: 20px 20px 20px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background .2s;
+    }
+    .pub-card:last-child { border-bottom: none; }
+    .pub-num {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 300;
+      color: rgba(200,169,126,0.25);
+      line-height: 1;
+      padding-top: 3px;
+      text-align: right;
+    }
+    .pub-title {
+      font-family: var(--serif);
+      font-size: 17px;
+      font-weight: 400;
+      color: var(--gold2);
+      line-height: 1.4;
+      margin-bottom: 6px;
+    }
+    .pub-authors {
+      font-size: 12.5px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .pub-authors strong {
+      color: var(--accent2);
+      font-weight: 500;
+    }
+    .pub-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .badge {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .badge-journal {
+      background: rgba(91,164,255,0.08);
+      border: 1px solid rgba(91,164,255,0.25);
+      color: var(--accent);
+    }
+    .badge-year {
+      background: rgba(200,169,126,0.08);
+      border: 1px solid rgba(200,169,126,0.25);
+      color: var(--gold);
+    }
+    .badge-special {
+      background: rgba(168,212,255,0.08);
+      border: 1px solid rgba(168,212,255,0.3);
+      color: var(--accent2);
+    }
+    .badge-revision {
+      background: rgba(107,138,181,0.1);
+      border: 1px solid rgba(107,138,181,0.3);
+      color: var(--muted);
+    }
+
+    /* ── EDUCATION & EXPERIENCE (timeline) ── */
+    .timeline { position: relative; padding-left: 28px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 8px; bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--gold) 0%, transparent 100%);
+      opacity: 0.3;
+    }
+    .tl-item {
+      position: relative;
+      margin-bottom: 32px;
+    }
+    .tl-item::before {
+      content: '';
+      position: absolute;
+      left: -32px; top: 6px;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      border: 1px solid var(--gold);
+      background: var(--bg);
+    }
+    .tl-period {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .tl-role {
+      font-family: var(--serif);
+      font-size: 19px;
+      font-weight: 400;
+      color: var(--gold2);
+      margin-bottom: 2px;
+    }
+    .tl-place {
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .tl-body {
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+    .tl-body ul { padding-left: 16px; }
+    .tl-body li { margin-bottom: 4px; }
+    .tl-detail {
+      display: inline-block;
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      background: rgba(107,138,181,0.08);
+      border: 1px solid var(--border);
+      padding: 2px 8px;
+      border-radius: 2px;
+      margin-right: 6px;
+    }
+
+    /* ── SKILLS ── */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    .skill-group {
+      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--card);
+    }
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-tag {
+      font-size: 12px;
+      padding: 3px 10px;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: var(--text);
+      background: rgba(13,26,48,0.5);
+    }
+
+    /* ── CONFERENCES ── */
+    .conf-list { display: flex; flex-direction: column; gap: 0; }
+    .conf-item {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .conf-item:last-child { border-bottom: none; }
+    .conf-title {
+      font-family: var(--serif);
+      font-size: 16px;
+      color: var(--gold2);
+      margin-bottom: 4px;
+    }
+    .conf-sub {
+      font-size: 12.5px;
+      color: var(--muted);
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+    .conf-type {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 2px 8px;
+      border-radius: 2px;
+    }
+    .conf-type-oral {
+      background: rgba(200,169,126,0.12);
+      border: 1px solid rgba(200,169,126,0.3);
+      color: var(--gold);
+    }
+    .conf-type-poster {
+      background: rgba(91,164,255,0.08);
+      border: 1px solid rgba(91,164,255,0.2);
+      color: var(--accent);
+    }
+    .conf-meta {
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .conf-date {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gold);
+      margin-bottom: 2px;
+    }
+    .conf-venue {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .conf-award {
+      display: inline-block;
+      margin-top: 6px;
+      font-family: var(--mono);
+      font-size: 10px;
+      padding: 2px 8px;
+      background: rgba(200,169,126,0.12);
+      border: 1px solid rgba(200,169,126,0.3);
+      color: var(--gold);
+      border-radius: 2px;
+    }
+
+    /* ── TEACHING ── */
+    .teaching-list { display: flex; flex-direction: column; gap: 0; }
+    .teaching-item {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: baseline;
+    }
+    .teaching-item:last-child { border-bottom: none; }
+    .teaching-term {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--gold);
+      letter-spacing: 0.05em;
+    }
+    .teaching-course {
+      font-size: 14px;
+      color: var(--text);
+    }
+    .teaching-place {
+      font-size: 12px;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    /* ── CONTACT ── */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+    .contact-block h3 {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+    .contact-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      font-size: 14px;
+    }
+    .contact-row svg { opacity: .6; flex-shrink: 0; }
+    .contact-row a { color: var(--text); }
+    .contact-row a:hover { color: var(--accent); }
+
+    /* ── ONGOING ── */
+    .ongoing-list { display: flex; flex-direction: column; gap: 10px; }
+    .ongoing-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 14px 16px;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      background: var(--card);
+      font-size: 14px;
+      color: var(--text);
+    }
+    .ongoing-icon {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      border: 1px solid rgba(200,169,126,0.4);
+      background: rgba(200,169,126,0.06);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 1px;
+    }
+    .ongoing-icon::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      opacity: .5;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero > * { animation: fadeUp .7s ease both; }
+    .hero > *:nth-child(1) { animation-delay: .1s; }
+    .hero > *:nth-child(2) { animation-delay: .25s; }
+
+    /* ── RESPONSIVE ── */
     @media (max-width: 640px) {
-      header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
+      .hero { grid-template-columns: 1fr; }
+      .crystal-ornament { display: none; }
+      .stats-strip { grid-template-columns: repeat(2,1fr); }
+      .contact-grid { grid-template-columns: 1fr; }
+      .teaching-item { grid-template-columns: 1fr; gap: 2px; }
+      .teaching-place { text-align: left; }
+      .conf-item { grid-template-columns: 1fr; }
+      .conf-meta { text-align: left; }
+      .nav-links { gap: 12px; }
     }
   </style>
 </head>
-
 <body>
-  <div class="page">
 
-    <!-- HEADER -->
-    <header>
-      <div>
-        <div class="name">Manasa G. Basavarajappa</div>
-        <div class="tagline">
-          PhD Student · MATES Lab · Harish-Chandra Research Institute (HRI), India  
-        </div>
+<!-- Lattice background -->
+<div class="lattice-bg">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="lp" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+        <circle cx="40" cy="40" r="2" fill="#5ba4ff"/>
+        <line x1="40" y1="40" x2="80" y2="40" stroke="#5ba4ff" stroke-width=".5"/>
+        <line x1="40" y1="40" x2="40" y2="80" stroke="#5ba4ff" stroke-width=".5"/>
+        <line x1="40" y1="40" x2="80" y2="80" stroke="#5ba4ff" stroke-width=".3" stroke-dasharray="4,4"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#lp)"/>
+  </svg>
+</div>
+
+<div class="page">
+
+  <!-- NAV -->
+  <nav>
+    <span class="nav-name">Manasa G. Basavarajappa</span>
+    <ul class="nav-links">
+      <li><a href="#research">Research</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#conferences">Talks</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div>
+      <div class="hero-label">PhD Researcher · Computational Materials Science</div>
+      <h1>Manasa G.<br><em>Basavarajappa</em></h1>
+      <p class="hero-bio">
+        I work at the intersection of condensed matter theory and materials design —
+        using first-principles DFT to unravel the electronic, optical, and vibrational
+        behaviour of perovskites and van der Waals heterostructures under pressure,
+        strain, and external fields. My goal: accelerating the discovery of materials
+        for next-generation photovoltaics and optoelectronics.
+      </p>
+      <div class="hero-tags">
+        <span class="tag">DFT &amp; AIMD</span>
+        <span class="tag">Perovskites</span>
+        <span class="tag">Phonon Dynamics</span>
+        <span class="tag">vdW Heterostructures</span>
+        <span class="tag">VASP · QE · Phonopy</span>
+        <span class="tag">MATES Lab · HRI</span>
       </div>
-      <nav>
-        <a href="#about">About</a>
-        <a href="#research">Research</a>
-        <a href="#publications">Publications</a>
-        <a href="#teaching">Teaching</a>
-        <a href="#conferences">Conferences</a>
-        <a href="#contact">Contact</a>
-      </nav>
-    </header>
+      <div class="hero-contact">
+        <span class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:manasagb@hri.res.in">manasagb@hri.res.in</a>
+        </span>
+        <span class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 83173 85584
+        </span>
+        <span class="contact-item">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          HRI, Prayagraj, India
+        </span>
+      </div>
+    </div>
 
-    <!-- ABOUT -->
-    <section id="about">
-      <h2>About</h2>
-      <p>
-        I am a PhD student working in the <strong>MATES Lab</strong> at the 
-        <strong>Harish-Chandra Research Institute (HRI)</strong>, India.  
-        My research focuses on computational condensed matter physics and materials science,
-        especially on the <strong>electronic, optical, vibrational, and interfacial properties</strong> 
-        of functional materials using first-principles simulations.
-      </p>
-      <p>
-        My PhD work involves studying <strong>oxide double perovskites under pressure</strong>, 
-        <strong>optically active halide perovskites</strong>, and 
-        <strong>vdW heterostructures</strong> for energy-related applications such as photovoltaics,
-        photodetection, and charge-transport engineering.
-      </p>
-    </section>
-
-    <!-- RESEARCH INTERESTS -->
-    <section id="research">
-      <h2>Research Interests</h2>
-      <ul>
-        <li>Density Functional Theory (DFT) simulations of solids and heterostructures</li>
-        <li>Oxide double perovskites under pressure and structural phase transitions</li>
-        <li>Electronic structure: band structures, DOS, effective masses, band alignment</li>
-        <li>Phonons, lattice dynamics, octahedral distortions, soft modes</li>
-        <li>Optical properties, SLME, exciton behavior, optoelectronic materials</li>
-        <li>Hybrid organic–inorganic halide perovskites</li>
-        <li>MXenes and perovskite/MXene heterostructures</li>
-        <li>Ab-initio molecular dynamics (AIMD)</li>
-      </ul>
-    </section>
-
-    <!-- PUBLICATIONS -->
-    <section id="publications">
-      <h2>Publications</h2>
-      <ol>
-
-        <li>
-          Solid-state synthesis of stable and color tunable cesium lead halide perovskite nanocrystals and the mechanism of high-performance photodetection in a monolayer MoS₂/CsPbBr₃ vertical heterojunction.  
-          <div class="meta">
-            Joydip Ghosh, Larionette P. L. Mawlong, <strong>Manasa G. B</strong>, et al.,  
-            <em>J. Mater. Chem. C</em>, 8, 8917–8934 (2020).
-          </div>
-        </li>
-
-        <li>
-          Anisotropic Photoconductivity and Long-Lived Charge Carriers in Bismuth-Based One-Dimensional Perovskite.  
-          <div class="meta">
-            Johnpaul K. Pious, <strong>Manasa G. Basavarajappa</strong>, et al.,  
-            <em>J. Phys. Chem. Lett.</em>, 11, 6757–6762 (2020).
-          </div>
-        </li>
-
-        <li>
-          Self-Assembled Organic Cations Assisted Band-Edge Tailoring in Bismuth-based Perovskites.  
-          <div class="meta">
-            J. Pious, <strong>Manasa G. Basavarajappa</strong>, et al.,  
-            <em>J. Phys. Chem. Lett.</em>, 12, 5758–5764 (2021).
-          </div>
-        </li>
-
-        <li>
-          Evolution of Hybrid Organic–Inorganic Perovskite Materials under External Pressure.  
-          <div class="meta">
-            <strong>Manasa G. Basavarajappa</strong>, M. K. Nazeeruddin, S. Chakraborty,  
-            <em>Appl. Phys. Rev.</em>, 8, 014109 (2021). (Editor's Choice)
-          </div>
-        </li>
-
-        <li>
-          Tuning Composition Space in Lead-Free Divalent and Tetravalent Halide Perovskites.  
-          <div class="meta">
-            A. Sarangi, <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
-            <em>Emergent Materials</em>, 5, 1021–1032 (2022).
-          </div>
-        </li>
-
-        <li>
-          Rationalization of Double Perovskite Oxides as Energy Materials.  
-          <div class="meta">
-            <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
-            <em>ACS Materials Au</em>, 2, 655–664 (2022). (Invited Review)
-          </div>
-        </li>
-
-        <li>
-          Tuning Optoelectronic Properties of KBaTeBiO₆ Double Perovskite Through Cationic Interplay.  
-          <div class="meta">
-            <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
-            <em>ACS Applied Optical Materials</em>, 2, 254–261 (2024).
-          </div>
-        </li>
-
-        <li>
-          Zero-dimensional Tin Halide Perovskite with Long Carrier Lifetime for Deep-UV Photodetection.  
-          <div class="meta">
-            A. Ajayakumar, <strong>Manasa G. Basavarajappa</strong>, et al.,  
-            <em>Adv. Funct. Mater.</em>, 34, 2304899 (2024).
-          </div>
-        </li>
-
-        <li>
-          Thermally-Induced Reversible Fluorochromism in Hybrid Copper(I)-Halide Perovskite Crystals.  
-          <div class="meta">
-            A. Dev, <strong>Manasa G. Basavarajappa</strong>, et al.,  
-            <em>Chem. Mater.</em>, 36, 5912 (2024).
-          </div>
-        </li>
-
-        <li>
-          Synergistic Effect of Temperature and Electric Field on Charge Transfer in MXene–Halide Perovskite Heterostructures.  
-          <div class="meta">
-            A. Sarangi, <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty,  
-            <em>Phys. Rev. B</em> (2024).
-          </div>
-        </li>
-
-        <li>
-          Local Symmetry Driven Octahedral Distortions and Phonon Softening in Pressure Tuned Oxide Double Perovskites.  
-          <div class="meta">
-            <strong>Manasa G. Basavarajappa</strong>, A. Sarangi, S. Chakraborty,  
-            Under Revision.
-          </div>
-        </li>
-
-      </ol>
-    </section>
-
-    <!-- TEACHING -->
-    <section id="teaching">
-      <h2>Teaching & Tutorials</h2>
-      <ul>
-        <li>Autumn 2019 – Magnetostatics (Tutorial), B.Tech I Sem, IIT Indore</li>
-        <li>Spring 2020 – Electrostatics–Electrodynamics (Tutorial), B.Tech II Sem, IIT Indore</li>
-        <li>Autumn 2020 – Modern Physics (Tutorial), B.Tech I Sem, IIT Indore</li>
-        <li>Independence Term 2024 – Classical Mechanics (Tutorial), M.Sc. I Sem, HRI</li>
-      </ul>
-    </section>
-
-    <!-- CONFERENCES -->
-    <section id="conferences">
-      <h2>Conferences & Workshops</h2>
-      <ul>
-        <li>MRSI AGM & Materials Conclave, Kolkata (2020)</li>
-        <li>Materials for Energy Harvesting & Catalysis (2020)</li>
-        <li>Materials Simulation Webinar Series (2020)</li>
-        <li>FDP: Computational Techniques in Chemistry & Materials Science (2020)</li>
-        <li>ICTP Workshop on Excited Charge Dynamics (2020)</li>
-        <li>VAIBHAV Summit (2020)</li>
-        <li>CACEE Conference (2020)</li>
-        <li>EESTER International Conference, SRM + IIT Madras (2023)</li>
-        <li>CARE Conference, TIFR + HRI (2023)</li>
-        <li>MRM–IUMRS 2023, Kyoto, Japan (Supported by CSIR Travel Grant)</li>
-      </ul>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact">
-      <h2>Contact</h2>
-      <p>If you'd like to connect or collaborate, feel free to reach out:</p>
-      <p>
-        📧 <a href="mailto:manasagb@hri.res.in">manasagb@hri.res.in</a><br>
-        📞 +91 8317385584<br>
-        🏢 Harish-Chandra Research Institute (HRI), Prayagraj, India
-      </p>
-          <a
-    id="cy-effective-orcid-url"
-    class="underline"
-     href="https://orcid.org/0000-0003-1176-5941"
-     target="orcid.widget"
-     rel="me noopener noreferrer"
-     style="vertical-align: top">
-     <img
-        src="https://orcid.org/sites/default/files/images/orcid_16x16.png"
-        style="width: 1em; margin-inline-start: 0.5em"
-        alt="ORCID iD icon"/>
-      https://orcid.org/0000-0003-1176-5941
-    </a>
-      <p class="meta">
-        (Google Scholar, LinkedIn, GitHub links can be added here once shared.)
-      </p>
-    </section>
-
-    <footer>
-      © <span id="year"></span> Manasa G. Basavarajappa · Computational Materials Science
-    </footer>
-
+    <!-- Animated crystal -->
+    <svg class="crystal-ornament" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="cg1" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#c8a97e" stop-opacity=".9"/>
+          <stop offset="100%" stop-color="#5ba4ff" stop-opacity=".6"/>
+        </linearGradient>
+      </defs>
+      <!-- Outer octahedron projection -->
+      <polygon points="100,10 180,75 160,170 100,190 40,170 20,75" fill="none" stroke="url(#cg1)" stroke-width="1"/>
+      <!-- Middle -->
+      <polygon points="100,30 160,82 144,158 100,172 56,158 40,82" fill="none" stroke="#5ba4ff" stroke-width=".7" stroke-dasharray="6,4"/>
+      <!-- Inner -->
+      <polygon points="100,55 140,92 128,146 100,154 72,146 60,92" fill="none" stroke="#c8a97e" stroke-width=".5"/>
+      <!-- Axes -->
+      <line x1="100" y1="10" x2="100" y2="190" stroke="#5ba4ff" stroke-width=".4" opacity=".4"/>
+      <line x1="20" y1="75" x2="180" y2="170" stroke="#5ba4ff" stroke-width=".4" opacity=".4"/>
+      <line x1="180" y1="75" x2="20" y2="170" stroke="#5ba4ff" stroke-width=".4" opacity=".4"/>
+      <!-- Vertices -->
+      <circle cx="100" cy="10" r="3" fill="#c8a97e" opacity=".8"/>
+      <circle cx="180" cy="75" r="3" fill="#c8a97e" opacity=".8"/>
+      <circle cx="160" cy="170" r="3" fill="#c8a97e" opacity=".8"/>
+      <circle cx="100" cy="190" r="3" fill="#c8a97e" opacity=".8"/>
+      <circle cx="40" cy="170" r="3" fill="#c8a97e" opacity=".8"/>
+      <circle cx="20" cy="75" r="3" fill="#c8a97e" opacity=".8"/>
+      <circle cx="100" cy="100" r="4" fill="#5ba4ff" opacity=".6"/>
+    </svg>
   </div>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <!-- STATS STRIP -->
+  <div class="stats-strip">
+    <div class="stat">
+      <div class="stat-number">11</div>
+      <div class="stat-label">Publications</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">4+</div>
+      <div class="stat-label">Years PhD</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">9</div>
+      <div class="stat-label">Conferences</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number">2</div>
+      <div class="stat-label">Invited Reviews</div>
+    </div>
+  </div>
+
+  <!-- RESEARCH INTERESTS -->
+  <section id="research">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <h2>Research Interests</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="interests-grid">
+      <div class="interest-card"><div class="interest-dot"></div>Density Functional Theory (DFT) &amp; Ab-initio MD</div>
+      <div class="interest-card"><div class="interest-dot"></div>Oxide double perovskites under pressure &amp; phase transitions</div>
+      <div class="interest-card"><div class="interest-dot"></div>Electronic structure: band gaps, DOS, effective masses, alignment</div>
+      <div class="interest-card"><div class="interest-dot"></div>Phonons, lattice dynamics, octahedral distortions, soft modes</div>
+      <div class="interest-card"><div class="interest-dot"></div>Optical properties, SLME, excitons, optoelectronic materials</div>
+      <div class="interest-card"><div class="interest-dot"></div>Hybrid organic–inorganic halide perovskites</div>
+      <div class="interest-card"><div class="interest-dot"></div>MXenes &amp; perovskite/MXene vdW heterostructures</div>
+      <div class="interest-card"><div class="interest-dot"></div>Defect physics &amp; carrier dynamics in photovoltaics</div>
+    </div>
+  </section>
+
+  <!-- PUBLICATIONS -->
+  <section id="publications">
+    <div class="section-head">
+      <span class="section-num">02</span>
+      <h2>Publications</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="pub-list">
+
+      <div class="pub-card">
+        <div class="pub-num">11</div>
+        <div>
+          <div class="pub-title">Local Symmetry Driven Octahedral Distortions, Phonon Mode Softening and Band Inversion in Pressure Tuned Oxide Double Perovskite</div>
+          <div class="pub-authors"><strong>Manasa G. Basavarajappa</strong>, A. Sarangi, S. Chakraborty</div>
+          <div class="pub-badges"><span class="badge badge-revision">Under Revision</span></div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">10</div>
+        <div>
+          <div class="pub-title">Effect of Temperature and Electric Field on Interfacial Charge Transfer and Band Edge Alignment in MXene–Halide Perovskite Heterostructure</div>
+          <div class="pub-authors">A. Sarangi, <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">Phys. Rev. B, 112, 235306</span>
+            <span class="badge badge-year">2025</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">9</div>
+        <div>
+          <div class="pub-title">Thermally-Induced Reversible Fluorochromism by Self-Trapped Excitonic Emission in a Two-Dimensional Hybrid Copper(I)-Halide Single Crystal</div>
+          <div class="pub-authors">A. Dev, <strong>Manasa G. Basavarajappa</strong>, S. Deshpande, et al.</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">Chem. Mater., 36, 5912</span>
+            <span class="badge badge-year">2024</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">8</div>
+        <div>
+          <div class="pub-title">Zero-dimensional Tin Halide Perovskite with Long Charge Carrier Lifetime and Anisotropic Photoconductivity for Selective Deep-UV Photodetection</div>
+          <div class="pub-authors">A. Ajayakumar, C. Muthu, <strong>Manasa G. Basavarajappa</strong>, et al.</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">Adv. Funct. Mater., 34, 2304899</span>
+            <span class="badge badge-year">2024</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">7</div>
+        <div>
+          <div class="pub-title">Tuning Optoelectronic Properties of KBaTeBiO₆ Double Perovskite Through Cationic Interplay</div>
+          <div class="pub-authors"><strong>Manasa G. Basavarajappa</strong>, S. Chakraborty</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">ACS Appl. Opt. Mater., 2, 254–261</span>
+            <span class="badge badge-year">2024</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">6</div>
+        <div>
+          <div class="pub-title">Rationalization of Double Perovskite Oxides as Energy Materials: A Theoretical Insight from Electronic and Optical Properties</div>
+          <div class="pub-authors"><strong>Manasa G. Basavarajappa</strong>, S. Chakraborty</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">ACS Materials Au, 2, 655–664</span>
+            <span class="badge badge-year">2022</span>
+            <span class="badge badge-special">Invited Review</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">5</div>
+        <div>
+          <div class="pub-title">Tuning Composition Space in Lead-Free Divalent and Tetravalent Halide Perovskites</div>
+          <div class="pub-authors">A. Sarangi, <strong>Manasa G. Basavarajappa</strong>, S. Chakraborty</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">Emergent Materials, 5, 1021–1032</span>
+            <span class="badge badge-year">2022</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">4</div>
+        <div>
+          <div class="pub-title">Evolution of Hybrid Organic–Inorganic Perovskite Materials under External Pressure</div>
+          <div class="pub-authors"><strong>Manasa G. Basavarajappa</strong>, M. K. Nazeeruddin, S. Chakraborty</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">Appl. Phys. Rev., 8, 014109</span>
+            <span class="badge badge-year">2021</span>
+            <span class="badge badge-special">Editor's Choice</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">3</div>
+        <div>
+          <div class="pub-title">Self-Assembled Organic Cations Assisted Band-Edge Tailoring in Bismuth-based Perovskites</div>
+          <div class="pub-authors">J. Pious, <strong>Manasa G. Basavarajappa</strong>, et al.</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">J. Phys. Chem. Lett., 12, 5758–5764</span>
+            <span class="badge badge-year">2021</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">2</div>
+        <div>
+          <div class="pub-title">Anisotropic Photoconductivity and Long-Lived Charge Carriers in Bismuth-Based One-Dimensional Perovskite</div>
+          <div class="pub-authors">J. K. Pious, <strong>Manasa G. Basavarajappa</strong>, et al.</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">J. Phys. Chem. Lett., 11, 6757–6762</span>
+            <span class="badge badge-year">2020</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-card">
+        <div class="pub-num">1</div>
+        <div>
+          <div class="pub-title">Solid-state synthesis of stable and color tunable cesium lead halide perovskite nanocrystals and the mechanism of high-performance photodetection in a monolayer MoS₂/CsPbBr₃ vertical heterojunction</div>
+          <div class="pub-authors">J. Ghosh, L. P. L. Mawlong, <strong>Manasa G. B.</strong>, et al.</div>
+          <div class="pub-badges">
+            <span class="badge badge-journal">J. Mater. Chem. C, 8, 8917–8934</span>
+            <span class="badge badge-year">2020</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ONGOING RESEARCH -->
+  <section id="ongoing">
+    <div class="section-head">
+      <span class="section-num">03</span>
+      <h2>Ongoing Research</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="ongoing-list">
+      <div class="ongoing-item"><div class="ongoing-icon"></div>Local Symmetry Driven Octahedral Distortions, Phonon Mode Softening and Band Inversion in Pressure Tuned Oxide Double Perovskites</div>
+      <div class="ongoing-item"><div class="ongoing-icon"></div>Finite-Temperature Lattice Dynamics and Carrier Relaxation in Double Oxide Perovskite</div>
+      <div class="ongoing-item"><div class="ongoing-icon"></div>Effect of Substitution on Electronic Structure and Defect Tolerance in Hybrid Bromide Perovskites</div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-head">
+      <span class="section-num">04</span>
+      <h2>Education &amp; Experience</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="timeline">
+
+      <div class="tl-item">
+        <div class="tl-period">May 2021 — Present</div>
+        <div class="tl-role">PhD in Physics</div>
+        <div class="tl-place">MATES Lab, Harish-Chandra Research Institute (HRI), Prayagraj</div>
+        <div class="tl-body">
+          <p>Thesis: <em>Theoretical Insight on Pressure Driven Electronic and Optical Properties in Emerging Perovskites</em></p>
+          <p style="margin-top:6px">Supervisor: Dr. Sudip Chakraborty</p>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-period">2019 — 2020</div>
+        <div class="tl-role">Junior Research Fellow</div>
+        <div class="tl-place">Indian Institute of Technology Indore</div>
+        <div class="tl-body">
+          Research on halide perovskite materials — color-tunable CsPbX₃ nanocrystals,
+          MoS₂/CsPbBr₃ heterojunctions, and lead-free 1D perovskites with anisotropic photoconductivity.
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-period">Jun 2015 — May 2017</div>
+        <div class="tl-role">Master of Science in Physics</div>
+        <div class="tl-place">University of Mysore, Karnataka</div>
+        <div class="tl-body">
+          <span class="tl-detail">GPA 8.066 / 10 · Distinction</span>
+        </div>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-period">Jun 2012 — May 2015</div>
+        <div class="tl-role">Bachelor of Science</div>
+        <div class="tl-place">JSS College for Women, University of Mysore</div>
+        <div class="tl-body">
+          Physics, Mathematics &amp; Computer Science
+          <span class="tl-detail">81.25% · Distinction</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TECHNICAL SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <span class="section-num">05</span>
+      <h2>Technical Skills</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <div class="skill-group-title">Electronic Structure</div>
+        <div class="skill-tags">
+          <span class="skill-tag">DFT</span>
+          <span class="skill-tag">Band Structure</span>
+          <span class="skill-tag">DOS</span>
+          <span class="skill-tag">Optical Properties</span>
+          <span class="skill-tag">Phonons</span>
+          <span class="skill-tag">AIMD</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Software Packages</div>
+        <div class="skill-tags">
+          <span class="skill-tag">VASP</span>
+          <span class="skill-tag">Quantum ESPRESSO</span>
+          <span class="skill-tag">Phonopy</span>
+          <span class="skill-tag">Wannier90</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Programming</div>
+        <div class="skill-tags">
+          <span class="skill-tag">Python</span>
+          <span class="skill-tag">Fortran</span>
+          <span class="skill-tag">C</span>
+          <span class="skill-tag">C++</span>
+          <span class="skill-tag">Bash</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Data &amp; Tools</div>
+        <div class="skill-tags">
+          <span class="skill-tag">NumPy</span>
+          <span class="skill-tag">Matplotlib</span>
+          <span class="skill-tag">Pandas</span>
+          <span class="skill-tag">Machine Learning</span>
+          <span class="skill-tag">Gnuplot</span>
+          <span class="skill-tag">Jupyter</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONFERENCES & TALKS -->
+  <section id="conferences">
+    <div class="section-head">
+      <span class="section-num">06</span>
+      <h2>Talks &amp; Conferences</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="conf-list">
+
+      <div class="conf-item">
+        <div>
+          <div class="conf-title">ACS Spring 2026</div>
+          <div class="conf-sub">Interplay of Dynamic Defects and Ultrafast Carrier Dynamics in Lead-Free Double Perovskites Toward Stable, High-Performance Photovoltaics</div>
+          <span class="conf-type conf-type-oral">Oral</span>
+        </div>
+        <div class="conf-meta">
+          <div class="conf-date">Mar 2026</div>
+          <div class="conf-venue">Atlanta, GA, USA</div>
+        </div>
+      </div>
+
+      <div class="conf-item">
+        <div>
+          <div class="conf-title">APS Global Physics Summit 2026</div>
+          <div class="conf-sub">Interplay of Dynamic Defects and Ultrafast Carrier Dynamics in Lead-Free Double Perovskites Toward Stable, High-Performance Photovoltaics</div>
+          <span class="conf-type conf-type-oral">Oral (Virtual)</span>
+        </div>
+        <div class="conf-meta">
+          <div class="conf-date">Mar 2026</div>
+          <div class="conf-venue">Denver, CO, USA</div>
+        </div>
+      </div>
+
+      <div class="conf-item">
+        <div>
+          <div class="conf-title">Nanomaterials &amp; Molecules: From Spectroscopy to Bioimaging</div>
+          <div class="conf-sub">Interplay of Dynamic Defects and Ultrafast Carrier Dynamics in Lead-Free Double Perovskites</div>
+          <span class="conf-type conf-type-poster">Poster</span>
+        </div>
+        <div class="conf-meta">
+          <div class="conf-date">Feb 2026</div>
+          <div class="conf-venue">IISER-K, Kolkata</div>
+        </div>
+      </div>
+
+      <div class="conf-item">
+        <div>
+          <div class="conf-title">MRM2023 / IUMRS-ICA2023</div>
+          <div class="conf-sub">Pressure Driven Oscillating Bandgap Variation in KBaTeSbO₆: Towards Transparent Solar Cell</div>
+          <span class="conf-type conf-type-poster">Poster</span>
+          <span class="conf-award">CSIR Foreign Travel Grant</span>
+        </div>
+        <div class="conf-meta">
+          <div class="conf-date">Dec 2023</div>
+          <div class="conf-venue">Kyoto, Japan</div>
+        </div>
+      </div>
+
+      <div class="conf-item">
+        <div>
+          <div class="conf-title">CARE 2023 – Renewable Energy</div>
+          <div class="conf-sub">Pressure Driven Structural and Optical Properties Study in Double Oxide Perovskites</div>
+          <span class="conf-type conf-type-poster">Poster</span>
+        </div>
+        <div class="conf-meta">
+          <div class="conf-date">Feb 2023</div>
+          <div class="conf-venue">HRI, Prayagraj</div>
+        </div>
+      </div>
+
+      <div class="conf-item">
+        <div>
+          <div class="conf-title">EESTER 2023</div>
+          <div class="conf-sub">Pressure Driven Structural and Optical Properties Study in Double Oxide Perovskites</div>
+          <span class="conf-type conf-type-poster">Poster</span>
+        </div>
+        <div class="conf-meta">
+          <div class="conf-date">Jan 2023</div>
+          <div class="conf-venue">SRM + IIT Madras</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TEACHING -->
+  <section id="teaching">
+    <div class="section-head">
+      <span class="section-num">07</span>
+      <h2>Teaching</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="teaching-list">
+      <div class="teaching-item">
+        <div class="teaching-term">Indep. 2024</div>
+        <div class="teaching-course">Classical Mechanics — M.Sc. I Sem (Tutorial)</div>
+        <div class="teaching-place">HRI, Prayagraj</div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-term">Autumn 2020</div>
+        <div class="teaching-course">Modern Physics: Semiconductor, Wave Optics &amp; Lasers — B.Tech I Sem (Tutorial)</div>
+        <div class="teaching-place">IIT Indore</div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-term">Spring 2020</div>
+        <div class="teaching-course">Electrostatics, Magnetostatics &amp; Electrodynamics — B.Tech II Sem (Tutorial)</div>
+        <div class="teaching-place">IIT Indore</div>
+      </div>
+      <div class="teaching-item">
+        <div class="teaching-term">Autumn 2019</div>
+        <div class="teaching-course">Magnetostatics — B.Tech I Sem (Tutorial)</div>
+        <div class="teaching-place">IIT Indore</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-head">
+      <span class="section-num">08</span>
+      <h2>Contact</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-block">
+        <h3>Get in touch</h3>
+        <div class="contact-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <a href="mailto:manasagb@hri.res.in">manasagb@hri.res.in</a>
+        </div>
+        <div class="contact-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.5 2 2 0 0 1 3.58 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          +91 83173 85584
+        </div>
+        <div class="contact-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          MATES Lab, HRI, Chhatnag Road, Jhunsi, Prayagraj — 211019, India
+        </div>
+        <div class="contact-row">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          <a href="https://orcid.org/0000-0003-1176-5941" target="_blank">ORCID: 0000-0003-1176-5941</a>
+        </div>
+      </div>
+      <div class="contact-block">
+        <h3>Languages</h3>
+        <div class="contact-row">English — Professional</div>
+        <div class="contact-row">Hindi — Fluent</div>
+        <div class="contact-row">Kannada — Native</div>
+        <br>
+        <h3>Supervisor</h3>
+        <div class="contact-row" style="flex-direction:column;align-items:flex-start;gap:2px">
+          <span>Dr. Sudip Chakraborty</span>
+          <span style="font-size:12px;color:var(--muted)">Principal Investigator, MATES Lab, HRI</span>
+          <a href="mailto:sudipchakraborty@hri.res.in" style="font-size:12px">sudipchakraborty@hri.res.in</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>© <span id="yr"></span> Manasa G. Basavarajappa</span>
+    <span style="font-size:10px;letter-spacing:.08em">Last updated April 2026</span>
+  </footer>
+
+</div>
+
+<script>
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
 </body>
 </html>
